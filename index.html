@@ -42,19 +42,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);height:100%;
 .lock-logo svg{width:44px;height:44px}
 .lock-h{font-size:28px;font-weight:700;letter-spacing:-.5px;text-align:center}
 .lock-sub{font-size:15px;color:var(--text3);text-align:center}
-.bio-btn{width:90px;height:90px;border-radius:50%;background:var(--bg3);border:2.5px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:var(--anim);-webkit-appearance:none;appearance:none}
-.bio-btn svg{width:44px;height:44px;color:var(--text2);transition:var(--anim)}
-.bio-btn.scanning{border-color:var(--accent);animation:pulse .9s infinite}
-.bio-btn.scanning svg{color:var(--accent)}
-.bio-btn.ok{border-color:var(--green)}
-.bio-btn.ok svg{color:var(--green)}
-.bio-btn.fail{border-color:var(--red)}
-.bio-btn.fail svg{color:var(--red)}
-@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(0,119,255,.35)}50%{box-shadow:0 0 0 18px rgba(0,119,255,0)}}
-.pin-toggle-btn{background:none;border:none;color:var(--accent);font-size:14px;cursor:pointer;font-family:var(--font);padding:4px}
-
 /* PIN */
-#pin-sec{display:none;flex-direction:column;align-items:center;gap:18px}
 .pin-dots{display:flex;gap:16px}
 .pd{width:14px;height:14px;border-radius:50%;border:2px solid var(--text3);transition:var(--anim)}
 .pd.f{background:var(--accent);border-color:var(--accent)}
@@ -191,35 +179,23 @@ select.fi{-webkit-appearance:none;appearance:none}
   </div>
   <div>
     <div class="lock-h">Vermögens-Tracker</div>
-    <div class="lock-sub" id="lsub">Fingerabdruck zum Entsperren</div>
+    <div class="lock-sub" id="lsub">PIN eingeben</div>
   </div>
 
-  <!-- BIOMETRIE -->
-  <div id="bio-sec" style="display:flex;flex-direction:column;align-items:center;gap:12px">
-    <button class="bio-btn" id="bio-btn" onclick="startBio()">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 11c0 3.517-1.009 6.799-2.753 9.571m-3.44-2.04l.054-.09A13.916 13.916 0 008 11a4 4 0 118 0c0 1.017-.07 2.019-.203 3m-2.118 6.844A21.88 21.88 0 0015.171 17m3.839 1.132c.645-2.266.99-4.659.99-7.132A8 8 0 008 4.07M3 15.364c.64-1.319 1-2.8 1-4.364 0-1.457.39-2.823 1.07-4"/></svg>
-    </button>
-    <button class="pin-toggle-btn" onclick="showPin()">PIN stattdessen verwenden</button>
-  </div>
-
-  <!-- PIN -->
-  <div id="pin-sec">
-    <div class="pin-dots"><div class="pd" id="d0"></div><div class="pd" id="d1"></div><div class="pd" id="d2"></div><div class="pd" id="d3"></div></div>
-    <div id="pin-err"></div>
-    <div class="pin-grid">
-      <button class="pk" data-k="1">1</button>
-      <button class="pk" data-k="2">2<span class="pks">ABC</span></button>
-      <button class="pk" data-k="3">3<span class="pks">DEF</span></button>
-      <button class="pk" data-k="4">4<span class="pks">GHI</span></button>
-      <button class="pk" data-k="5">5<span class="pks">JKL</span></button>
-      <button class="pk" data-k="6">6<span class="pks">MNO</span></button>
-      <button class="pk" data-k="7">7<span class="pks">PQRS</span></button>
-      <button class="pk" data-k="8">8<span class="pks">TUV</span></button>
-      <button class="pk" data-k="9">9<span class="pks">WXYZ</span></button>
-      <button class="pk" data-k="bio" style="font-size:22px">☞</button>
-      <button class="pk" data-k="0">0</button>
-      <button class="pk" data-k="del" style="font-size:18px">⌫</button>
-    </div>
+  <div class="pin-dots"><div class="pd" id="d0"></div><div class="pd" id="d1"></div><div class="pd" id="d2"></div><div class="pd" id="d3"></div></div>
+  <div id="pin-err"></div>
+  <div class="pin-grid">
+    <button class="pk" data-k="1">1</button>
+    <button class="pk" data-k="2">2<span class="pks">ABC</span></button>
+    <button class="pk" data-k="3">3<span class="pks">DEF</span></button>
+    <button class="pk" data-k="4">4<span class="pks">GHI</span></button>
+    <button class="pk" data-k="5">5<span class="pks">JKL</span></button>
+    <button class="pk" data-k="6">6<span class="pks">MNO</span></button>
+    <button class="pk" data-k="7">7<span class="pks">PQRS</span></button>
+    <button class="pk" data-k="8">8<span class="pks">TUV</span></button>
+    <button class="pk" data-k="9">9<span class="pks">WXYZ</span></button>
+    <button class="pk" data-k="0" style="grid-column:2">0</button>
+    <button class="pk" data-k="del" style="font-size:18px">⌫</button>
   </div>
 </div>
 
@@ -307,10 +283,6 @@ select.fi{-webkit-appearance:none;appearance:none}
         <div class="stit">Sicherheit</div>
         <div class="card">
           <div class="tog-row">
-            <div><div style="font-size:16px;font-weight:600">Biometrie aktiv</div><div style="font-size:13px;color:var(--text3)">Fingerabdruck beim Start</div></div>
-            <button class="tog on" id="tog-bio" onclick="this.classList.toggle('on')"></button>
-          </div>
-          <div class="tog-row">
             <div style="font-size:16px;font-weight:600">PIN ändern</div>
             <button class="btn bs" style="width:auto;margin:0;padding:9px 16px;font-size:14px" onclick="openPIN()">Ändern</button>
           </div>
@@ -378,7 +350,7 @@ const KEY='vt4';
 let db=loadDB();
 function loadDB(){try{const r=localStorage.getItem(KEY);if(r)return JSON.parse(r);}catch(e){}return emptyDB();}
 function saveDB(){localStorage.setItem(KEY,JSON.stringify(db));}
-function emptyDB(){return{pin:'1234',platforms:[
+function emptyDB(){return{pin:'7355',platforms:[
   {id:'tr',name:'Trade Republic',emoji:'📈',cat:'etf',note:''},
   {id:'bev',name:'Bevestor',emoji:'🏦',cat:'etf',note:''},
   {id:'osk',name:'Oskar',emoji:'🤖',cat:'etf',note:''},
@@ -392,65 +364,12 @@ function emptyDB(){return{pin:'1234',platforms:[
 ],snapshots:[],goals:[]};}
 
 // ========== LOCK / BIO ==========
-let pinE='',bioFails=0;
+let pinE='';
 
-// Echte WebAuthn Biometrie — kein Auto-Unlock
-async function startBio(){
-  const btn=document.getElementById('bio-btn');
-  const lsub=document.getElementById('lsub');
-  btn.className='bio-btn scanning';
-  lsub.textContent='Bitte Fingerabdruck auflegen…';
 
-  // Challenge
-  const challenge=crypto.getRandomValues(new Uint8Array(32));
-
-  try{
-    if(!window.PublicKeyCredential){throw new Error('no-webauthn');}
-    const supported=await PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable();
-    if(!supported){throw new Error('no-authenticator');}
-
-    // Versuche mit vorhandenem Credential zu authentifizieren
-    await navigator.credentials.get({
-      publicKey:{
-        challenge,
-        userVerification:'required',
-        timeout:60000,
-        rpId:window.location.hostname||'localhost',
-      }
-    });
-    // Wenn wir hier ankommen: Biometrie erfolgreich
-    btn.className='bio-btn ok';
-    lsub.textContent='Entsperrt ✓';
-    setTimeout(unlock,350);
-
-  }catch(err){
-    btn.className='bio-btn';
-    if(err.name==='NotAllowedError'){
-      // User hat abgebrochen oder Timeout
-      lsub.textContent='Abgebrochen – erneut tippen oder PIN verwenden';
-    } else if(err.name==='InvalidStateError'||err.message==='no-authenticator'||err.message==='no-webauthn'){
-      // Kein biometrischer Schlüssel registriert — PIN anzeigen
-      lsub.textContent='Biometrie nicht verfügbar – bitte PIN nutzen';
-      setTimeout(showPin,800);
-    } else {
-      bioFails++;
-      lsub.textContent='Nicht erkannt – erneut versuchen';
-      if(bioFails>=2)setTimeout(showPin,800);
-    }
-    // Btn zurücksetzen
-    setTimeout(()=>{btn.className='bio-btn';if(document.getElementById('bio-sec').style.display!=='none')lsub.textContent='Fingerabdruck zum Entsperren';},1800);
-  }
-}
-
-function showPin(){
-  document.getElementById('bio-sec').style.display='none';
-  document.getElementById('pin-sec').style.display='flex';
-  document.getElementById('lsub').textContent='PIN eingeben';
-}
 
 document.querySelectorAll('.pk').forEach(b=>b.addEventListener('click',()=>{
   const k=b.dataset.k;
-  if(k==='bio'){document.getElementById('pin-sec').style.display='none';document.getElementById('bio-sec').style.display='flex';document.getElementById('lsub').textContent='Fingerabdruck zum Entsperren';bioFails=0;return;}
   if(k==='del')pinE=pinE.slice(0,-1);
   else if(pinE.length<4)pinE+=k;
   for(let i=0;i<4;i++)document.getElementById('d'+i).classList.toggle('f',i<pinE.length);
