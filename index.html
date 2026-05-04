@@ -103,8 +103,7 @@ nav{background:var(--nav-bg);backdrop-filter:blur(20px);-webkit-backdrop-filter:
 .gbb{background:var(--bg3);border-radius:99px;height:6px;margin:8px 0 4px;overflow:hidden}
 .gb{height:6px;border-radius:99px;background:var(--accent);transition:width 1s cubic-bezier(.4,0,.2,1)}
 
-.chip-row{display:flex;gap:7px;overflow-x:auto;padding:2px 0 10px;scrollbar-width:none}
-.chip-row::-webkit-scrollbar{display:none}
+.chip-row{display:flex;gap:7px;flex-wrap:wrap;padding:2px 0 10px;}
 .chip{padding:8px 16px;border-radius:22px;font-size:13px;font-weight:600;border:none;cursor:pointer;white-space:nowrap;font-family:var(--font);transition:var(--anim)}
 .chip.on{background:var(--accent);color:#fff}
 .chip:not(.on){background:var(--bg3);color:var(--text2)}
@@ -243,15 +242,30 @@ select.fi{-webkit-appearance:none;appearance:none}
         <div class="card" style="overflow-x:auto"><div id="yanalysis"></div></div>
       </div>
 
-      <!-- 2 DEPOT -->
+      <!-- 2 EINTRAG -->
       <div class="page" id="p2">
+        <div class="pg-h"><div class="pg-t">Eintrag</div></div>
+        <div style="background:var(--accent);border-radius:18px;padding:16px 18px;margin-bottom:16px;color:#fff;display:flex;align-items:center;gap:12px">
+          <div style="font-size:32px">📅</div>
+          <div>
+            <div style="font-size:13px;opacity:.8;margin-bottom:2px">Monatlicher Snapshot</div>
+            <div class="mpick" style="background:rgba(255,255,255,.2);border-radius:20px;padding:6px 14px;display:inline-flex;align-items:center;gap:6px;font-size:15px;font-weight:700;color:#fff;cursor:pointer;margin:0" onclick="pickMon()">📅 <span id="mpick-t"></span></div>
+          </div>
+        </div>
+        <div id="snap-f"></div>
+        <button class="btn bp" onclick="saveSnap()">💾 Snapshot speichern</button>
+        <div style="height:16px"></div>
+      </div>
+
+      <!-- 3 DEPOT -->
+      <div class="page" id="p3">
         <div class="pg-h"><div class="pg-t">Depot</div><button class="icon-btn" onclick="openPM()">＋</button></div>
         <div class="chip-row" id="psort"></div>
         <div id="plist"></div>
       </div>
 
-      <!-- 3 PLANUNG -->
-      <div class="page" id="p3">
+      <!-- 4 PLANUNG -->
+      <div class="page" id="p4">
         <div class="pg-h"><div class="pg-t">Planung</div></div>
         <div class="card">
           <div style="font-size:18px;font-weight:700;margin-bottom:2px">🔥 FIRE-Rechner</div>
@@ -271,16 +285,7 @@ select.fi{-webkit-appearance:none;appearance:none}
         <div class="stit">Sparziele</div>
         <div id="pl-goals"></div>
         <button class="btn bs" onclick="openGM()">＋ Ziel hinzufügen</button>
-        <div class="stit">Monatlicher Snapshot</div>
-        <div class="mpick" onclick="pickMon()">📅 <span id="mpick-t"></span></div>
-        <div id="snap-f"></div>
-        <button class="btn bp" onclick="saveSnap()">Snapshot speichern</button>
-      </div>
-
-      <!-- 4 SETTINGS -->
-      <div class="page" id="p4">
-        <div class="pg-h"><div class="pg-t">Einstellungen</div></div>
-        <div class="stit">Sicherheit</div>
+        <div class="stit">Einstellungen</div>
         <div class="card">
           <div class="tog-row">
             <div style="font-size:16px;font-weight:600">PIN ändern</div>
@@ -294,7 +299,7 @@ select.fi{-webkit-appearance:none;appearance:none}
           <button class="btn bs" onclick="document.getElementById('ifile').click()">⬇ Importieren</button>
           <button class="btn bd" onclick="resetAll()">Alle Daten löschen</button>
         </div>
-        <div style="text-align:center;font-size:12px;color:var(--text3);margin-top:36px;padding-bottom:16px">Vermögens-Tracker v3.1 · Alle Daten lokal gespeichert</div>
+        <div style="text-align:center;font-size:12px;color:var(--text3);margin-top:36px;padding-bottom:16px">Vermögens-Tracker v3.2 · Alle Daten lokal gespeichert</div>
       </div>
 
     </div>
@@ -304,9 +309,9 @@ select.fi{-webkit-appearance:none;appearance:none}
   <nav>
     <button class="nb on" onclick="go(0,this)"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg><span>Home</span><div class="nb-dot"></div></button>
     <button class="nb" onclick="go(1,this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg><span>Verlauf</span><div class="nb-dot"></div></button>
-    <button class="nb" onclick="go(2,this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg><span>Depot</span><div class="nb-dot"></div></button>
-    <button class="nb" onclick="go(3,this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg><span>Planung</span><div class="nb-dot"></div></button>
-    <button class="nb" onclick="go(4,this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83 0 2 2 0 010-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 010-2.83 2 2 0 012.83 0l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 0 2 2 0 010 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg><span>Mehr</span><div class="nb-dot"></div></button>
+    <button class="nb" onclick="go(2,this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg><span>Eintrag</span><div class="nb-dot"></div></button>
+    <button class="nb" onclick="go(3,this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg><span>Depot</span><div class="nb-dot"></div></button>
+    <button class="nb" onclick="go(4,this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg><span>Planung</span><div class="nb-dot"></div></button>
   </nav>
 </div>
 
@@ -317,7 +322,7 @@ select.fi{-webkit-appearance:none;appearance:none}
   <label class="flbl">Name</label><input class="fi" id="pN" placeholder="Trade Republic">
   <label class="flbl">Emoji</label><input class="fi" id="pE" placeholder="📈" style="max-width:100px">
   <label class="flbl">Kategorie</label>
-  <select class="fi" id="pC"><option value="etf">ETF / Aktien</option><option value="crypto">Krypto</option><option value="spar">Bauspar / Festgeld</option><option value="rueck">Rücklage</option></select>
+  <select class="fi" id="pC"><option value="etf">ETF / Aktien</option><option value="crypto">Krypto</option><option value="spar">Bauspar / Festgeld</option><option value="rueck">Rücklage</option><option value="sach">Sachwerte</option></select>
   <label class="flbl">Notiz (optional)</label><textarea class="fi" id="pNt" style="resize:vertical;min-height:70px"></textarea>
   <button class="btn bp" onclick="savePlat()">Speichern</button>
   <button class="btn bs" onclick="cm('m-plat')">Abbrechen</button>
@@ -359,7 +364,7 @@ function emptyDB(){return{pin:'7355',platforms:[
   {id:'eto',name:'eToro',emoji:'🌐',cat:'etf',note:''},
   {id:'url',name:'Urlaub',emoji:'✈️',cat:'rueck',note:''},
   {id:'not',name:'Not',emoji:'🆘',cat:'rueck',note:'Notgroschen'},
-  {id:'tim',name:'Timeless',emoji:'⌚',cat:'etf',note:''},
+  {id:'tim',name:'Timeless',emoji:'⌚',cat:'sach',note:'Anteile an Uhren, Autos & Kunst'},
   {id:'zwi',name:'Zwickel',emoji:'🏦',cat:'spar',note:''},
 ],snapshots:[],goals:[]};}
 
@@ -421,14 +426,15 @@ function go(idx,btn){
   if(btn)btn.classList.add('on');
   if(idx===0)renderHome();
   if(idx===1)renderVerlauf();
-  if(idx===2)renderDepot();
-  if(idx===3){renderSnapF();renderPlGoals();calcFire();calcProg();}
+  if(idx===2)renderSnapF();
+  if(idx===3)renderDepot();
+  if(idx===4){renderPlGoals();calcFire();calcProg();}
 }
 
 // ========== HELPERS ==========
-function cc(c){return{etf:'#0077FF',crypto:'#FF9500',spar:'#1DB954',rueck:'#AF52DE'}[c]||'#8E8E93';}
-function cl(c){return{etf:'ETF / Aktien',crypto:'Krypto',spar:'Bauspar',rueck:'Rücklage'}[c]||c;}
-function cb(c){const m={etf:['rgba(0,119,255,.15)','#0077FF'],crypto:['rgba(255,149,0,.15)','#FF9500'],spar:['rgba(29,185,84,.15)','#1DB954'],rueck:['rgba(175,82,222,.15)','#AF52DE']};const[bg,fc]=m[c]||['rgba(142,142,147,.15)','#8E8E93'];return`background:${bg};color:${fc}`;}
+function cc(c){return{etf:'#0077FF',crypto:'#FF9500',spar:'#1DB954',rueck:'#AF52DE',sach:'#FF6B35'}[c]||'#8E8E93';}
+function cl(c){return{etf:'ETF / Aktien',crypto:'Krypto',spar:'Bauspar',rueck:'Rücklage',sach:'Sachwerte'}[c]||c;}
+function cb(c){const m={etf:['rgba(0,119,255,.15)','#0077FF'],crypto:['rgba(255,149,0,.15)','#FF9500'],spar:['rgba(29,185,84,.15)','#1DB954'],rueck:['rgba(175,82,222,.15)','#AF52DE'],sach:['rgba(255,107,53,.15)','#FF6B35']};const[bg,fc]=m[c]||['rgba(142,142,147,.15)','#8E8E93'];return`background:${bg};color:${fc}`;}
 function fmt(n){return new Intl.NumberFormat('de-DE',{style:'currency',currency:'EUR',maximumFractionDigits:0}).format(n||0);}
 function fmtK(n){if(Math.abs(n)>=1e6)return(n/1e6).toFixed(1)+'M';if(Math.abs(n)>=1e3)return(n/1e3).toFixed(0)+'k€';return Math.round(n)+'€';}
 function fp(n,d=1){return(n>=0?'+':'')+n.toFixed(d)+'%';}
@@ -514,7 +520,17 @@ function renderMRows(){
   const sn=snaps2().slice().reverse();
   document.getElementById('mrows').innerHTML=sn.length?sn.map((s,i,arr)=>{
     const t2=tot(s),p2=arr[i+1],pt2=p2?tot(p2):null,d2=pt2!==null?t2-pt2:null,pc2=pt2&&pt2>0?(t2-pt2)/pt2*100:null;
-    return `<div style="display:flex;align-items:center;padding:12px 0;border-bottom:.5px solid var(--border);cursor:pointer" onclick="detMon('${s.month}')"><div style="flex:1"><div style="font-size:15px;font-weight:600">${mnl(s.month)}</div><div style="font-size:12px;color:var(--text3)">Einzahlungen: ${fmt(einz(s))}</div></div><div style="text-align:right"><div style="font-size:16px;font-weight:700">${fmt(t2)}</div><div style="font-size:12px;font-weight:600;color:${d2===null?'var(--text3)':d2>=0?'var(--green)':'var(--red)'}">${d2===null?'—':(d2>=0?'+':'')+fmt(d2)+(pc2!==null?' ('+fp(pc2)+')':'')}</div></div><div style="margin-left:8px;color:var(--text3);font-size:18px">›</div></div>`;
+    return `<div style="border-bottom:.5px solid var(--border);padding:12px 0">
+      <div style="display:flex;align-items:center;cursor:pointer" onclick="detMon('${s.month}')">
+        <div style="flex:1"><div style="font-size:15px;font-weight:600">${mnl(s.month)}</div><div style="font-size:12px;color:var(--text3)">Einzahlungen: ${fmt(einz(s))}</div></div>
+        <div style="text-align:right;margin-right:8px"><div style="font-size:16px;font-weight:700">${fmt(t2)}</div><div style="font-size:12px;font-weight:600;color:${d2===null?'var(--text3)':d2>=0?'var(--green)':'var(--red)'}">${d2===null?'—':(d2>=0?'+':'')+fmt(d2)+(pc2!==null?' ('+fp(pc2)+')':'')}</div></div>
+        <div style="color:var(--text3);font-size:18px">›</div>
+      </div>
+      <div style="display:flex;gap:8px;margin-top:8px">
+        <button onclick="editSnap('${s.month}')" style="flex:1;padding:7px;border-radius:10px;background:var(--al);border:none;color:var(--accent);font-size:13px;font-weight:600;cursor:pointer;font-family:var(--font)">✏ Bearbeiten</button>
+        <button onclick="deleteSnap('${s.month}')" style="flex:1;padding:7px;border-radius:10px;background:var(--rl);border:none;color:var(--red);font-size:13px;font-weight:600;cursor:pointer;font-family:var(--font)">🗑 Löschen</button>
+      </div>
+    </div>`;
   }).join(''):'<div style="font-size:13px;color:var(--text3);padding:14px 0">Noch keine Einträge.</div>';
 }
 
@@ -584,6 +600,18 @@ function saveSnap(){
 }
 
 // ========== GOALS ==========
+function editSnap(ym){
+  // Navigate to Eintrag tab with that month loaded
+  snapMon=ym;
+  renderSnapF();
+  go(2,document.querySelectorAll('.nb')[2]);
+  toast('Monat '+mnl(ym)+' geladen — Werte anpassen und speichern');
+}
+function deleteSnap(ym){
+  if(!confirm('Snapshot für '+mnl(ym)+' wirklich löschen?'))return;
+  db.snapshots=db.snapshots.filter(s=>s.month!==ym);
+  saveDB();renderMRows();renderHome();toast('Snapshot gelöscht');
+}
 function renderPlGoals(){
   const l=last();
   document.getElementById('pl-goals').innerHTML=db.goals.length?db.goals.map((g,i)=>{
