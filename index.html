@@ -245,15 +245,25 @@ select.fi{-webkit-appearance:none;appearance:none}
       <!-- 2 EINTRAG -->
       <div class="page" id="p2">
         <div class="pg-h"><div class="pg-t">Eintrag</div></div>
-        <div style="background:var(--accent);border-radius:18px;padding:16px 18px;margin-bottom:16px;color:#fff;display:flex;align-items:center;gap:12px">
-          <div style="font-size:32px">📅</div>
-          <div>
-            <div style="font-size:13px;opacity:.8;margin-bottom:2px">Monatlicher Snapshot</div>
-            <div class="mpick" style="background:rgba(255,255,255,.2);border-radius:20px;padding:6px 14px;display:inline-flex;align-items:center;gap:6px;font-size:15px;font-weight:700;color:#fff;cursor:pointer;margin:0" onclick="pickMon()">📅 <span id="mpick-t"></span></div>
+
+        <!-- Month selector hero -->
+        <div style="background:var(--accent);border-radius:20px;padding:18px;margin-bottom:16px;color:#fff">
+          <div style="font-size:13px;opacity:.75;margin-bottom:6px;letter-spacing:.4px;text-transform:uppercase">Monat wählen</div>
+          <div style="display:flex;align-items:center;justify-content:space-between">
+            <button onclick="shiftMon(-1)" style="background:rgba(255,255,255,.2);border:none;color:#fff;width:36px;height:36px;border-radius:50%;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center">‹</button>
+            <div id="mpick-t" style="font-size:20px;font-weight:700;cursor:pointer" onclick="pickMon()"></div>
+            <button onclick="shiftMon(1)" style="background:rgba(255,255,255,.2);border:none;color:#fff;width:36px;height:36px;border-radius:50%;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center">›</button>
           </div>
+          <div id="snap-exists-badge" style="text-align:center;margin-top:8px;font-size:12px;opacity:.8"></div>
         </div>
+
+        <!-- Info box -->
+        <div style="background:var(--aml);border-radius:14px;padding:12px 14px;margin-bottom:14px;font-size:13px;color:var(--amber)">
+          <strong>💡 Tipp:</strong> Trage bei jedem Eintrag den aktuellen <strong>Gesamtwert</strong> der Plattform ein und was du in diesem Monat <strong>neu eingezahlt</strong> hast (0 wenn nichts). So kann die App Rendite vs. Einzahlungen korrekt berechnen.
+        </div>
+
         <div id="snap-f"></div>
-        <button class="btn bp" onclick="saveSnap()">💾 Snapshot speichern</button>
+        <button class="btn bp" onclick="saveSnap()" style="position:sticky;bottom:16px">💾 Snapshot speichern</button>
         <div style="height:16px"></div>
       </div>
 
@@ -285,7 +295,12 @@ select.fi{-webkit-appearance:none;appearance:none}
         <div class="stit">Sparziele</div>
         <div id="pl-goals"></div>
         <button class="btn bs" onclick="openGM()">＋ Ziel hinzufügen</button>
-        <div class="stit">Einstellungen</div>
+      </div>
+
+      <!-- 5 SETTINGS -->
+      <div class="page" id="p5">
+        <div class="pg-h"><div class="pg-t">Einstellungen</div></div>
+        <div class="stit">Sicherheit</div>
         <div class="card">
           <div class="tog-row">
             <div style="font-size:16px;font-weight:600">PIN ändern</div>
@@ -299,7 +314,7 @@ select.fi{-webkit-appearance:none;appearance:none}
           <button class="btn bs" onclick="document.getElementById('ifile').click()">⬇ Importieren</button>
           <button class="btn bd" onclick="resetAll()">Alle Daten löschen</button>
         </div>
-        <div style="text-align:center;font-size:12px;color:var(--text3);margin-top:36px;padding-bottom:16px">Vermögens-Tracker v3.2 · Alle Daten lokal gespeichert</div>
+        <div style="text-align:center;font-size:12px;color:var(--text3);margin-top:36px;padding-bottom:16px">Vermögens-Tracker v4.0 · Alle Daten lokal gespeichert</div>
       </div>
 
     </div>
@@ -312,6 +327,7 @@ select.fi{-webkit-appearance:none;appearance:none}
     <button class="nb" onclick="go(2,this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg><span>Eintrag</span><div class="nb-dot"></div></button>
     <button class="nb" onclick="go(3,this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg><span>Depot</span><div class="nb-dot"></div></button>
     <button class="nb" onclick="go(4,this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg><span>Planung</span><div class="nb-dot"></div></button>
+    <button class="nb" onclick="go(5,this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83 0 2 2 0 010-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 010-2.83 2 2 0 012.83 0l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 0 2 2 0 010 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg><span>Mehr</span><div class="nb-dot"></div></button>
   </nav>
 </div>
 
@@ -351,10 +367,36 @@ select.fi{-webkit-appearance:none;appearance:none}
 
 <script>
 // ========== DB ==========
-const KEY='vt4';
+const KEY='vt5';
 let db=loadDB();
-function loadDB(){try{const r=localStorage.getItem(KEY);if(r)return JSON.parse(r);}catch(e){}return emptyDB();}
-function saveDB(){localStorage.setItem(KEY,JSON.stringify(db));}
+function loadDB(){
+  try{
+    // Try primary key
+    const r=localStorage.getItem(KEY);
+    if(r){const d=JSON.parse(r);if(d&&d.platforms&&d.snapshots)return migrate(d);}
+    // Try legacy key
+    const leg=localStorage.getItem('vt4');
+    if(leg){const d=JSON.parse(leg);if(d&&d.platforms&&d.snapshots){saveDB2(d);return migrate(d);}}
+  }catch(e){}
+  return emptyDB();
+}
+function migrate(d){
+  // Ensure all required fields exist
+  if(!d.goals)d.goals=[];
+  if(!d.settings)d.settings={chartMode:'gesamt',timeFilter:'all',platSort:'wert'};
+  if(!d.pin)d.pin='7355';
+  // Ensure each snapshot has einz field
+  d.snapshots=d.snapshots.map(s=>({...s,einz:s.einz||s.einzahlungen||{}}));
+  return d;
+}
+function saveDB(){
+  try{
+    const json=JSON.stringify(db);
+    localStorage.setItem(KEY,json);
+    localStorage.setItem(KEY+'_bak',json); // backup copy
+  }catch(e){console.warn('saveDB failed',e);}
+}
+function saveDB2(d){try{localStorage.setItem(KEY,JSON.stringify(d));}catch(e){}}
 function emptyDB(){return{pin:'7355',platforms:[
   {id:'tr',name:'Trade Republic',emoji:'📈',cat:'etf',note:''},
   {id:'bev',name:'Bevestor',emoji:'🏦',cat:'etf',note:''},
@@ -364,9 +406,9 @@ function emptyDB(){return{pin:'7355',platforms:[
   {id:'eto',name:'eToro',emoji:'🌐',cat:'etf',note:''},
   {id:'url',name:'Urlaub',emoji:'✈️',cat:'rueck',note:''},
   {id:'not',name:'Not',emoji:'🆘',cat:'rueck',note:'Notgroschen'},
-  {id:'tim',name:'Timeless',emoji:'⌚',cat:'sach',note:'Anteile an Uhren, Autos & Kunst'},
+  {id:'tim',name:'Timeless',emoji:'⌚',cat:'sach',note:'Fraktioniertes Eigentum an Luxus-Kollektibles: Uhren, Kunst, Autos, Sneakers (timeless.investments)'},
   {id:'zwi',name:'Zwickel',emoji:'🏦',cat:'spar',note:''},
-],snapshots:[],goals:[]};}
+],snapshots:[],goals:[],settings:{chartMode:'gesamt',timeFilter:'all',platSort:'wert'}};}
 
 // ========== LOCK / BIO ==========
 let pinE='';
@@ -393,6 +435,12 @@ document.querySelectorAll('.pk').forEach(b=>b.addEventListener('click',()=>{
 function unlock(){
   document.getElementById('lock').style.display='none';
   document.getElementById('app').classList.add('visible');
+  // Restore saved settings
+  if(db.settings){
+    chartM=db.settings.chartMode||'gesamt';
+    tFilter=db.settings.timeFilter||'all';
+    platSort=db.settings.platSort||'wert';
+  }
   renderHome();calcFire();calcProg();renderSnapF();renderPlGoals();
 }
 
@@ -415,7 +463,7 @@ outer.addEventListener('touchend',e=>{
   if(!sw){wrap.style.transform=`translateX(${-curP*100}vw)`;return;}
   const dx=e.changedTouches[0].clientX-tx;
   wrap.style.transition='';
-  const next=dx<-50?Math.min(4,curP+1):dx>50?Math.max(0,curP-1):curP;
+  const next=dx<-50?Math.min(5,curP+1):dx>50?Math.max(0,curP-1):curP;
   go(next,document.querySelectorAll('.nb')[next]);
 },{passive:true});
 
@@ -429,6 +477,7 @@ function go(idx,btn){
   if(idx===2)renderSnapF();
   if(idx===3)renderDepot();
   if(idx===4){renderPlGoals();calcFire();calcProg();}
+  if(idx===5){}
 }
 
 // ========== HELPERS ==========
@@ -501,8 +550,8 @@ function renderVerlauf(){
   buildLine();renderMRows();renderYTbl('yanalysis');
 }
 function snaps2(){return tFilter==='all'?db.snapshots:db.snapshots.slice(-parseInt(tFilter));}
-function setCM(m,b){chartM=m;document.querySelectorAll('#ct .chip').forEach(x=>x.classList.remove('on'));b.classList.add('on');buildLine();}
-function setTF(v,b){tFilter=v;document.querySelectorAll('#tf .chip').forEach(x=>x.classList.remove('on'));b.classList.add('on');buildLine();renderMRows();}
+function setCM(m,b){chartM=m;db.settings.chartMode=m;saveDB();document.querySelectorAll('#ct .chip').forEach(x=>x.classList.remove('on'));b.classList.add('on');buildLine();}
+function setTF(v,b){tFilter=v;db.settings.timeFilter=v;saveDB();document.querySelectorAll('#tf .chip').forEach(x=>x.classList.remove('on'));b.classList.add('on');buildLine();renderMRows();}
 function buildLine(){
   if(lineInst){lineInst.destroy();lineInst=null;}
   const sn=snaps2();if(!sn.length)return;
@@ -550,7 +599,7 @@ function renderDepot(){
     return `<div class="pi" onclick="detPlat('${pl.id}')"><div class="pico" style="background:${cc(pl.cat)}18">${pl.emoji||'💰'}</div><div style="flex:1"><div class="pn">${pl.name}</div><div class="pc"><span style="padding:2px 7px;border-radius:7px;font-size:11px;font-weight:600;${cb(pl.cat)}">${cl(pl.cat)}</span><span style="font-size:11px;color:var(--text3);margin-left:6px">${sh.toFixed(1)}%</span></div></div><div style="text-align:right"><div style="font-size:16px;font-weight:700">${fmt(cur)}</div><div style="font-size:12px;font-weight:600;color:${d2>=0?'var(--green)':'var(--red)'}">${prv?(d2>=0?'+':'')+fp(pc2):'—'}</div></div><div style="color:var(--text3);font-size:18px;margin-left:4px">›</div></div>`;
   }).join('');
 }
-function setPS(v,b){platSort=v;document.querySelectorAll('#psort .chip').forEach(x=>x.classList.remove('on'));b.classList.add('on');renderDepot();}
+function setPS(v,b){platSort=v;db.settings.platSort=v;saveDB();document.querySelectorAll('#psort .chip').forEach(x=>x.classList.remove('on'));b.classList.add('on');renderDepot();}
 
 // ========== FIRE ==========
 function calcFire(){
@@ -590,13 +639,36 @@ function renderSnapF(){
   }).join('');
 }
 function pickMon(){const m=prompt('Monat eingeben (YYYY-MM):',snapMon);if(m&&/^\d{4}-\d{2}$/.test(m)){snapMon=m;renderSnapF();}}
+function shiftMon(dir){
+  const[y,mo]=snapMon.split('-').map(Number);
+  const d=new Date(y,mo-1+dir,1);
+  snapMon=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0');
+  renderSnapF();
+}
 function saveSnap(){
   const values={},einzD={};
-  db.platforms.forEach(pl=>{values[pl.id]=parseFloat(document.getElementById('sv_'+pl.id)?.value)||0;einzD[pl.id]=parseFloat(document.getElementById('se_'+pl.id)?.value)||0;});
-  const idx=db.snapshots.findIndex(s=>s.month===snapMon);
+  let hasData=false;
+  db.platforms.forEach(pl=>{
+    const vEl=document.getElementById('sv_'+pl.id);
+    const eEl=document.getElementById('se_'+pl.id);
+    const v=vEl?parseFloat(vEl.value)||0:0;
+    const e=eEl?parseFloat(eEl.value)||0:0;
+    values[pl.id]=v;
+    einzD[pl.id]=e;
+    if(v>0)hasData=true;
+  });
+  if(!hasData&&!confirm('Alle Werte sind 0 — trotzdem speichern?'))return;
   const snap={month:snapMon,values,einz:einzD};
-  if(idx>=0)db.snapshots[idx]=snap;else{db.snapshots.push(snap);db.snapshots.sort((a,b)=>a.month.localeCompare(b.month));}
-  saveDB();toast('Snapshot gespeichert ✓');renderHome();
+  const idx=db.snapshots.findIndex(s=>s.month===snapMon);
+  if(idx>=0){db.snapshots[idx]=snap;}
+  else{db.snapshots.push(snap);db.snapshots.sort((a,b)=>a.month.localeCompare(b.month));}
+  saveDB();
+  // Verify save
+  const check=localStorage.getItem('vt5');
+  const ok=check&&JSON.parse(check).snapshots.some(s=>s.month===snapMon);
+  toast(ok?'✅ Snapshot gespeichert ('+mnl(snapMon)+')':'⚠ Fehler beim Speichern!');
+  renderHome();
+  renderSnapF(); // refresh to show updated badge
 }
 
 // ========== GOALS ==========
